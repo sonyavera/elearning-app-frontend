@@ -8,7 +8,7 @@ function CourseContent() {
 
 
     return(
-        <h1>Hi</h1>
+        <h1>Course Content</h1>
     )
 
 }
