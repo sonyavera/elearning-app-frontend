@@ -3,8 +3,8 @@ import { useState, useContext } from 'react'
 import styled, { css } from 'styled-components'
 
 
-function TaskListDropdown() {
-    
+
+function TaskListDropdown() {    
     const Button = styled.button`
         background: transparent;
         font-size: 1em;
@@ -22,11 +22,7 @@ function TaskListDropdown() {
     `};
   `
 
-    const Container = styled.div`
-        text-align: center;
-        `
-
-
+    const Container = styled.div``
 
     return(
         <Container>
