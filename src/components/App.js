@@ -1,49 +1,49 @@
-import React, { Fragment, useState, useContext } from 'react';
+import React, { Fragment, useState, useContext, useEffect } from 'react';
 import CourseContent from './CourseContent'
 import TaskListDropdown from './TaskListDropdown'
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { gql } from "@apollo/client";
+import { ApolloConsumer } from '@apollo/client';
 
-const query = gql`
+
+
+const GET_USERS = gql`
   query getUsers {
-    getUsers {
       users{
         id
         firstName
         lastName
       } 
     }
-  }
 `;
 
 function App() {
-  const { loading, data} = useQuery(query);
+    const [users, setUsers] = useState([])
+    const [projects, setProjects] = useState([])
+    const [skip, setSkip] = useState(false)
 
-  if (loading) return <p>Loading...</p>;
-  // if (error) return <p>There's an error: {errorUser.message}</p>;
-  console.dir(data);
+    const { loading, data } = useQuery(GET_USERS);
+    React.useEffect(() => {
+      if (!loading && !data){
+        setSkip(true)
+      }
+      console.log(data)
+    }, [data, loading])
+
+
+
   return (
     <div>
-    {
-      data.users.map((user, index) => (
-      <div key={user.id}>
-        <p>
-          <b>{user.firstName}</b>
-        </p>
-      </div>
-      ))
-    }
+    <TaskListDropdown 
+      projects={projects} 
+      users={users}
+      />
+    <CourseContent 
+      projects={projects}
+      users={users}
+      />
     </div>
   );
 }
-
-// function App() {
-//   return (
-//     <Fragment>
-//     <TaskListDropdown/>
-//     <CourseContent/>
-//     </Fragment>
-//   );
-// }
 
 export default App;
